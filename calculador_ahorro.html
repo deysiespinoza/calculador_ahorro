@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculador de Ahorro de Energía</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .result {
+            background-color: #f0f0f0;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Calculador de Ahorro de Energía</h1>
+    <label for="watts">Total de Vatios (Watts):</label>
+    <input type="number" id="watts" placeholder="Ingrese el total de vatios">
+
+    <label for="horasDia">Horas de uso al día:</label>
+    <input type="number" id="horasDia" placeholder="Ingrese horas de uso diarias">
+
+    <label for="horasSemana">Horas de uso a la semana:</label>
+    <input type="number" id="horasSemana" placeholder="Ingrese horas de uso semanales">
+
+    <label for="horasMes">Horas de uso al mes:</label>
+    <input type="number" id="horasMes" placeholder="Ingrese horas de uso mensuales">
+
+    <button onclick="calcularAhorro()">Calcular Ahorro</button>
+
+    <div id="result" class="result" style="display: none;">
+        <p id="resultadoConsumo"></p>
+        <p id="resultadoAhorro"></p>
+        <p id="resultadoTiempo"></p>
+    </div>
+</div>
+
+<script>
+    function calcularAhorro() {
+        let watts = document.getElementById("watts").value;
+        let horasDia = document.getElementById("horasDia").value;
+        let horasSemana = document.getElementById("horasSemana").value;
+        let horasMes = document.getElementById("horasMes").value;
+
+        // Validar los inputs
+        if (watts === "" || horasDia === "" || horasSemana === "" || horasMes === "") {
+            alert("Por favor, complete todos los campos.");
+            return;
+        }
+
+        // Consumo en kWh
+        let consumoDia = (watts * horasDia) / 1000;
+        let consumoSemana = (watts * horasSemana) / 1000;
+        let consumoMes = (watts * horasMes) / 1000;
+
+        // Suponiendo una reducción de 20% en horas de uso
+        let ahorroPorcentaje = 20;
+        let consumoReducido = consumoMes * (1 - (ahorroPorcentaje / 100));
+
+        // Mostrar resultados
+        document.getElementById("resultadoConsumo").innerHTML = `Consumo energético mensual actual: ${consumoMes.toFixed(2)} kWh`;
+        document.getElementById("resultadoAhorro").innerHTML = `Consumo reducido en un ${ahorroPorcentaje}%: ${consumoReducido.toFixed(2)} kWh`;
+        document.getElementById("resultadoTiempo").innerHTML = `Tiempo estimado para lograr este ahorro: 1 mes.`;
+
+        document.getElementById("result").style.display = "block";
+    }
+</script>
+
+</body>
+</html>
